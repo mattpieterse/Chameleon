@@ -4,7 +4,7 @@ public class Config
 {
 #region JSON
 
-    public List<UseSection> Use { get; set; } = [];
+    public List<UseSection> Uses { get; set; } = [];
 
 #endregion
 }
