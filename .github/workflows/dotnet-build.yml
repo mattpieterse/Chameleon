@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build .NET 8 Console App on Windows
+    name: Build .NET 8 Solution on Windows
     runs-on: windows-latest
 
     steps:
