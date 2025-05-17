@@ -6,12 +6,6 @@ namespace Terminal;
 
 internal static class App
 {
-#region Fields
-
-    private static Config? _appConfiguration;
-
-#endregion
-
 #region Lifecycle
 
     /// <summary>
@@ -37,6 +31,7 @@ internal static class App
             options.AddBranch("account", (group) => {
                 group.AddCommand<AccountCreateCommand>("create");
                 group.AddCommand<AccountDeleteCommand>("delete");
+                group.AddCommand<AccountUseCommand>("use");
             });
         });
 
