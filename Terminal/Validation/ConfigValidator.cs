@@ -13,13 +13,13 @@ public class ConfigValidator
             throw new ArgumentNullException(nameof(instance));
         }
 
-        if (instance.Uses.Count == 0) {
+        if (instance.Accounts.Count == 0) {
             throw new InvalidOperationException("No git accounts have been configured.");       
         }
 
         // Validate that fields match the expected type and are not empty
-        for (var i = 0; i < instance.Uses.Count; i++) {
-            var item = instance.Uses[i];
+        for (var i = 0; i < instance.Accounts.Count; i++) {
+            var item = instance.Accounts[i];
 
             if (string.IsNullOrWhiteSpace(item.Name)) {
                 throw new InvalidOperationException($"Account[{i}] {nameof(item.Name).ToLower()} cannot be empty.]");
@@ -43,7 +43,7 @@ public class ConfigValidator
             try {
                 _ = new MailAddress(item.Configs.Email);
             }
-            catch (Exception e) {
+            catch (Exception) {
                 throw new InvalidOperationException(
                     $"Account[{i}] {nameof(item.Configs.Email).ToLower()} is not a valid email address.");
             }

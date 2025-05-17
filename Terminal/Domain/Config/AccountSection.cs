@@ -1,12 +1,12 @@
 ﻿namespace Terminal.Domain.Config;
 
-public class UseSection
+public class AccountSection
 {
 #region JSON
 
     public string Name { get; set; } = string.Empty;
     public string Path { get; set; } = string.Empty;
-    public UseConfigs Configs { get; set; } = new();
+    public AccountConfigs Configs { get; set; } = new();
 
 #endregion
 }

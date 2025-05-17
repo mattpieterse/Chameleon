@@ -1,7 +1,6 @@
-﻿using Spectre.Console;
+﻿using Spectre.Console.Cli;
+using Terminal.Commands;
 using Terminal.Domain.Config;
-using Terminal.Services;
-using Terminal.Validation;
 
 namespace Terminal;
 
@@ -15,28 +14,33 @@ internal static class App
 
 #region Lifecycle
 
-    private static void Main(string[] args) {
-        var config = new FileConfigurationManager("config.json");
-        try {
-            _appConfiguration = config.Load();
-        }
-        catch (ArgumentException) {
-            AnsiConsole.MarkupLineInterpolated($"[red]Configuration directory is poorly formed.[/]");
-            Environment.Exit(1);
-        }
-        catch (Exception e) {
-            AnsiConsole.MarkupLineInterpolated($"[red]Could not load configuration: {e.Message}[/]");
-            Environment.Exit(1);
-        }
+    /// <summary>
+    /// Entry point for the application.
+    /// </summary>
+    /// <param name="args">
+    /// Arguments parsed from the command-line upon execution of the application
+    /// via a terminal. Used by the <see cref="Spectre.Console.Cli.CommandApp"/>
+    /// to execute commands with arguments.
+    /// </param>
+    /// <returns>
+    /// <see cref="Environment.ExitCode"/>
+    /// </returns>
+    private static int Main(string[] args) {
+        var app = new CommandApp();
 
-        try {
-            var validator = new ConfigValidator();
-            validator.Validate(_appConfiguration);
-        }
-        catch (Exception e) {
-            AnsiConsole.MarkupLineInterpolated($"[red]Config Validation Error: {e.Message}[/]");
-            Environment.Exit(1);
-        }
+        app.Configure((options) => {
+            options.SetApplicationName("Chameleon (4Git)");
+            options.SetApplicationVersion("v0.0.0 (beta)");
+
+            // Commands
+
+            options.AddBranch("account", (group) => {
+                group.AddCommand<AccountCreateCommand>("create");
+                group.AddCommand<AccountDeleteCommand>("delete");
+            });
+        });
+
+        return app.Run(args);
     }
 
 #endregion

@@ -14,4 +14,11 @@
       <PackageReference Include="Spectre.Console.Testing" Version="0.50.1-preview.0.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="config.json" />
+      <Resource Include="config.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
 </Project>

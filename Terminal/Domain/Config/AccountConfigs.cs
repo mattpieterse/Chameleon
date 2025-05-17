@@ -1,6 +1,6 @@
 ﻿namespace Terminal.Domain.Config;
 
-public class UseConfigs
+public class AccountConfigs
 {
 #region JSON
 

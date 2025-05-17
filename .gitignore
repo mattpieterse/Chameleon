@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# runtime files
+config.json
+
 # dotenv files
 .env
 
