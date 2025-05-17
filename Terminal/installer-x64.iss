@@ -1,12 +1,19 @@
 #define AppName "Chameleon"
 #define AppExeName "chameleon.exe"
 #define AppVersion "2025w20b"
+#define AppPublisherUrl "https://www.github.com/mattpieterse"
+#define AppPublisher "Matthew Pieterse"
+#define AppCopyright "Copyright © 2025 Pieterse M."
 
 
 [Setup]
 
 AppName={#AppName}
 AppVersion={#AppVersion}
+AppPublisherURL={#AppPublisherUrl}
+AppPublisher={#AppPublisher}
+AppCopyright={#AppCopyright}
+AppId={{BEF1C02B-9739-4DBB-A45F-4E5A6E24B5AD}}
 DefaultDirName={commonpf}\{#AppName}
 DefaultGroupName={#AppName}
 OutputBaseFilename=chameleon-installer-x64
@@ -14,6 +21,7 @@ OutputDir=.\bin\Installer
 Compression=lzma
 SolidCompression=yes
 AlwaysRestart=yes
+PrivilegesRequired=admin
 
 
 [Languages]
