@@ -9,28 +9,16 @@ public sealed class SpectreTypeRegistrar(IHostBuilder builder)
 {
 #region Inherited
 
-    public void Register(Type service, Type implementation) {
-        builder.ConfigureServices((_, services) => {
-            //
-            services.AddSingleton(service, implementation);
-        });
-    }
+    public void Register(Type service, Type implementation) =>
+        builder.ConfigureServices((_, svcs) => svcs.AddSingleton(service, implementation));
 
 
-    public void RegisterInstance(Type service, object implementation) {
-        builder.ConfigureServices((_, services) => {
-            //
-            services.AddSingleton(service, implementation);
-        });
-    }
+    public void RegisterInstance(Type service, object implementation) =>
+        builder.ConfigureServices((_, svcs) => svcs.AddSingleton(service, implementation));
 
 
-    public void RegisterLazy(Type service, Func<object> factory) {
-        builder.ConfigureServices((_, services) => {
-            //
-            services.AddSingleton(service, (_) => factory());
-        });
-    }
+    public void RegisterLazy(Type service, Func<object> factory) =>
+        builder.ConfigureServices((_, svcs) => svcs.AddSingleton(service, (_) => factory()));
 
 
     public ITypeResolver Build() => new SpectreTypeResolver(builder.Build());

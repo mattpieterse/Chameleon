@@ -2,7 +2,7 @@
 
 namespace Terminal.Commands;
 
-public class AccountDeleteCommandSettings
+public sealed class AccountDeleteCommandSettings
     : CommandSettings
 {
     [CommandArgument(0, "<name>")]

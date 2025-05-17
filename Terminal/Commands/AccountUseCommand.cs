@@ -7,18 +7,22 @@ using Terminal.Validation;
 
 namespace Terminal.Commands;
 
+/// <summary>
+/// Command to set the active account.
+/// </summary>
 public sealed class AccountUseCommand(
     IConfigurationManager configManager,
-    IValidator<Config> validator
+    IValidator<Config> configValidator
 ) : Command<AccountUseCommandSettings>
 {
 #region Inherited
 
+    /// <inheritdoc cref="Command{T}.Execute(CommandContext, T)"/>   
     public override int Execute(
         CommandContext context, AccountUseCommandSettings settings
     ) {
         var config = configManager.Load();
-        validator.Validate(config);
+        configValidator.Validate(config);
 
         var account = config.Accounts.Find((a) => a.Name == settings.Name);
         if (account is null) {

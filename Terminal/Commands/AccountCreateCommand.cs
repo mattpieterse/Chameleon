@@ -3,29 +3,28 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using Terminal.Domain.Config;
 using Terminal.Services;
-using Terminal.Validation;
 
 namespace Terminal.Commands;
 
+/// <summary>
+/// Command to create an account.
+/// </summary>
 public sealed class AccountCreateCommand(
     IConfigurationManager configManager
 ) : Command<AccountCreateCommandSettings>
 {
 #region Inherited
 
+    /// <inheritdoc cref="Command{T}.Execute(CommandContext, T)"/>   
     public override int Execute(
         CommandContext context, AccountCreateCommandSettings settings
     ) {
         var config = configManager.Load();
 
-        // 
-
         if (config.Accounts.Exists((i) => i.Name == settings.Name)) {
             AnsiConsole.MarkupLineInterpolated($"[red]This account profile already exists.[/]");
             return -1;
         }
-
-        //
 
         var path = AnsiConsole.Ask<string>("Path to SSH File (Public):");
 
@@ -42,8 +41,6 @@ public sealed class AccountCreateCommand(
                     }
                 })
         );
-
-        //
 
         config.Accounts.Add(
             new AccountSection {

@@ -1,17 +1,19 @@
 ﻿using Spectre.Console;
 using Spectre.Console.Cli;
-using Terminal.Domain.Config;
 using Terminal.Services;
-using Terminal.Validation;
 
 namespace Terminal.Commands;
 
+/// <summary>
+/// Command to delete an account.
+/// </summary>
 public sealed class AccountDeleteCommand(
     IConfigurationManager configManager
 ) : Command<AccountDeleteCommandSettings>
 {
 #region Inherited
 
+    /// <inheritdoc cref="Command{T}.Execute(CommandContext, T)"/>   
     public override int Execute(
         CommandContext context, AccountDeleteCommandSettings settings
     ) {
