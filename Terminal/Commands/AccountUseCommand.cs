@@ -1,23 +1,23 @@
 ﻿using System.Diagnostics;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using Terminal.Domain.Config;
 using Terminal.Services;
 using Terminal.Validation;
 
 namespace Terminal.Commands;
 
-public sealed class AccountUseCommand
-    : Command<AccountUseCommandSettings>
+public sealed class AccountUseCommand(
+    IConfigurationManager configManager,
+    IValidator<Config> validator
+) : Command<AccountUseCommandSettings>
 {
 #region Inherited
 
     public override int Execute(
         CommandContext context, AccountUseCommandSettings settings
     ) {
-        var manager = new FileConfigurationManager("config.json");
-        var config = manager.Load();
-
-        var validator = new ConfigValidator();
+        var config = configManager.Load();
         validator.Validate(config);
 
         var account = config.Accounts.Find((a) => a.Name == settings.Name);

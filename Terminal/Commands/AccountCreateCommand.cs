@@ -7,16 +7,16 @@ using Terminal.Validation;
 
 namespace Terminal.Commands;
 
-public sealed class AccountCreateCommand
-    : Command<AccountCreateCommandSettings>
+public sealed class AccountCreateCommand(
+    IConfigurationManager configManager
+) : Command<AccountCreateCommandSettings>
 {
 #region Inherited
 
     public override int Execute(
         CommandContext context, AccountCreateCommandSettings settings
     ) {
-        var manager = new FileConfigurationManager("config.json");
-        var config = manager.Load();
+        var config = configManager.Load();
 
         // 
 
@@ -57,7 +57,7 @@ public sealed class AccountCreateCommand
             }
         );
 
-        manager.Save(config);
+        configManager.Save(config);
         AnsiConsole.MarkupLineInterpolated($"[green]Account <{settings.Name}> created successfully.[/]");
         return 0;
     }

@@ -3,10 +3,12 @@ using Terminal.Domain.Config;
 
 namespace Terminal.Services;
 
-public class FileConfigurationManager(string path)
+public class FileConfigurationManager
     : IConfigurationManager
 {
 #region Fields
+
+    private const string Path = "config.json";
 
     private readonly JsonSerializerOptions _serializerOptions = new() {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true
@@ -19,7 +21,7 @@ public class FileConfigurationManager(string path)
     /// <inheritdoc cref="IConfigurationManager.Load"/>
     public Config Load() {
         EnsureConfigDirectoryExists();
-        var json = File.ReadAllText(path);
+        var json = File.ReadAllText(Path);
         return JsonSerializer.Deserialize<Config>(json, _serializerOptions)
                ?? new Config();
     }
@@ -28,7 +30,7 @@ public class FileConfigurationManager(string path)
     public void Save(Config config) {
         ArgumentNullException.ThrowIfNull(config);
         var json = JsonSerializer.Serialize(config, _serializerOptions);
-        File.WriteAllText(path, json);
+        File.WriteAllText(Path, json);
     }
 
 #endregion
@@ -39,12 +41,12 @@ public class FileConfigurationManager(string path)
     /// Creates an empty JSON file if one does not exist.
     /// </summary>
     private void EnsureConfigDirectoryExists() {
-        if (File.Exists(path)) {
+        if (File.Exists(Path)) {
             return;
         }
 
         var json = JsonSerializer.Serialize(new Config(), _serializerOptions);
-        File.WriteAllText(path, json);
+        File.WriteAllText(Path, json);
     }
 
 #endregion

@@ -1,6 +1,11 @@
-﻿using Spectre.Console.Cli;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Spectre.Console.Cli;
 using Terminal.Commands;
+using Terminal.Domain;
 using Terminal.Domain.Config;
+using Terminal.Services;
+using Terminal.Validation;
 
 namespace Terminal;
 
@@ -19,9 +24,24 @@ internal static class App
     /// <returns>
     /// <see cref="Environment.ExitCode"/>
     /// </returns>
-    private static int Main(string[] args) {
-        var app = new CommandApp();
+    private static void Main(string[] args) {
+    #region Host
 
+        var builder = Host.CreateDefaultBuilder(args);
+
+        // Dependency Injection (DI)
+        builder.ConfigureServices(static (_, services) => {
+            services.AddSingleton<IConfigurationManager, FileConfigurationManager>();
+            services.AddSingleton<IValidator<Config>, ConfigurationValidator>();
+        });
+
+    #endregion
+
+    #region Configuration
+
+        var app = builder.BuildApp();
+
+        // Application Configuration
         app.Configure((options) => {
             options.SetApplicationName("Chameleon (4Git)");
             options.SetApplicationVersion("v0.0.0 (beta)");
@@ -35,7 +55,9 @@ internal static class App
             });
         });
 
-        return app.Run(args);
+        app.Run(args);
+
+    #endregion
     }
 
 #endregion

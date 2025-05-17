@@ -3,7 +3,7 @@ using Terminal.Domain.Config;
 
 namespace Terminal.Validation;
 
-public class ConfigValidator
+public class ConfigurationValidator
     : IValidator<Config>
 {
 #region Inherited
