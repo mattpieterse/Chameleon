@@ -7,7 +7,7 @@ public class Config
 {
 #region JSON
 
-    public List<AccountSection> Accounts { get; private init; } = [];
+    public List<AccountSection> Accounts { get; init; } = [];
 
 #endregion
 }

@@ -15,6 +15,13 @@ public sealed class AccountUseCommand(
     IValidator<Config> configValidator
 ) : Command<AccountUseCommandSettings>
 {
+#region Fields
+    
+    private const int FailureCode = 1;
+    private const int SuccessCode = 0;
+
+#endregion
+
 #region Inherited
 
     /// <inheritdoc cref="Command{T}.Execute(CommandContext, T)"/>   
@@ -27,7 +34,7 @@ public sealed class AccountUseCommand(
         var account = config.Accounts.Find((a) => a.Name == settings.Name);
         if (account is null) {
             AnsiConsole.MarkupLineInterpolated($"[red]Account <{settings.Name}> not found in config.[/]");
-            return -1;
+            return FailureCode;
         }
 
         var gitConfigs = new[] {
@@ -41,7 +48,7 @@ public sealed class AccountUseCommand(
 
         foreach (var (key, value) in gitConfigs) {
             var result = SetGitConfig(key, value);
-            if (result != 0) {
+            if (result != SuccessCode) {
                 AnsiConsole.MarkupLineInterpolated($"[red]Failed to set git config <{key}>.[/]");
                 return result;
             }
@@ -51,11 +58,11 @@ public sealed class AccountUseCommand(
         AnsiConsole.MarkupLine($"\n[blue]Testing SSH connection for '{settings.Name}'...[/]");
         if (RunSshTest(settings.Name)) {
             AnsiConsole.MarkupLine("[green]SSH connection successful![/]");
-            return 0;
+            return SuccessCode;
         }
         else {
             AnsiConsole.MarkupLine("[red]SSH authentication failed.[/]");
-            return 1;
+            return FailureCode;
         }
     }
 
@@ -75,7 +82,7 @@ public sealed class AccountUseCommand(
         process?.WaitForExit();
 
         return process?.ExitCode
-               ?? -1;
+               ?? FailureCode;
     }
 
     private static bool RunSshTest(string account) {
