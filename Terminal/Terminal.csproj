@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2025.1.0-eap1" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0-preview.4.25258.110" />
       <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.5" />
       <PackageReference Include="Spectre.Console.Cli" Version="0.50.1-preview.0.5" />

@@ -10,6 +10,7 @@ namespace Terminal.Commands;
 /// <summary>
 /// Command to create an account.
 /// </summary>
+[UsedImplicitly]
 public sealed class AccountCreateCommand(IConfigurationManager configManager)
     : Command<AccountCreateCommandSettings>
 {

@@ -9,6 +9,7 @@ namespace Terminal.Commands;
 /// <summary>
 /// Command to delete an account.
 /// </summary>
+[UsedImplicitly]
 public sealed class AccountDeleteCommand(IConfigurationManager configManager)
     : Command<AccountDeleteCommandSettings>
 {

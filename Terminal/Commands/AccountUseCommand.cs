@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using JetBrains.Annotations;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using Terminal.Domain.Config;
@@ -10,6 +11,7 @@ namespace Terminal.Commands;
 /// <summary>
 /// Command to set the active account.
 /// </summary>
+[UsedImplicitly]
 public sealed class AccountUseCommand(
     IConfigurationManager configManager,
     IValidator<Config> configValidator
